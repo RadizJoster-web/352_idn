@@ -27,7 +27,7 @@ export const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL
 export const DEFAULT_DESCRIPTION =
   '352.IDN - Portal berita sepak bola terpercaya. Berita terkini, kabar Timnas Indonesia, Liga 1, Liga Eropa, dan analisis taktik mendalam.';
 
-export const DEFAULT_OG_IMAGE = `/logo.png`;
+export const DEFAULT_OG_IMAGE = `${BASE_URL}/logo.png`;
 
 export function constructMetadata({
   title,
