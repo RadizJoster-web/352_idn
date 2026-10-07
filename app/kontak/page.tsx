@@ -1,9 +1,64 @@
+import type { Metadata } from 'next';
+import { constructMetadata, BASE_URL, SITE_NAME } from '@/app/src/lib/seo';
 import { IoIosMail, IoIosCall } from 'react-icons/io';
 
+export const metadata: Metadata = constructMetadata({
+  title: 'Kontak Kami',
+  description: `Hubungi tim redaksi dan bisnis ${SITE_NAME} untuk kerja sama media, pemasangan iklan, informasi pers, dan hak jawab.`,
+  slug: 'kontak',
+  ogType: 'website',
+});
+
 export default function ContactPage() {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'ContactPage',
+    name: `Kontak Kami - ${SITE_NAME}`,
+    description: `Hubungi tim redaksi dan bisnis ${SITE_NAME} untuk kerja sama media, pemasangan iklan, informasi pers, dan hak jawab.`,
+    url: `${BASE_URL}/kontak`,
+    mainEntity: {
+      '@type': 'NewsMediaOrganization',
+      name: SITE_NAME,
+      url: BASE_URL,
+      email: '352idn@gmail.com',
+      telephone: '+62 856-9248-1496',
+      contactPoint: [
+        {
+          '@type': 'ContactPoint',
+          telephone: '+62 856-9248-1496',
+          contactType: 'customer service',
+          email: '352idn@gmail.com',
+          availableLanguage: ['Indonesian', 'English'],
+        },
+      ],
+    },
+    breadcrumb: {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        {
+          '@type': 'ListItem',
+          position: 1,
+          name: 'Home',
+          item: BASE_URL,
+        },
+        {
+          '@type': 'ListItem',
+          position: 2,
+          name: 'Kontak',
+          item: `${BASE_URL}/kontak`,
+        },
+      ],
+    },
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <div className="mx-auto max-w-190 px-4 py-12">
+
         <h1 className="text-3xl font-semibold text-text mb-2 font-serif">
           Kontak Kami
         </h1>

@@ -1,3 +1,5 @@
+import type { Metadata } from 'next';
+import { constructMetadata, BASE_URL, SITE_NAME } from '@/app/src/lib/seo';
 import {
   IoIosWarning,
   IoIosInformationCircleOutline,
@@ -5,8 +7,41 @@ import {
   IoIosStats,
 } from 'react-icons/io';
 
+export const metadata: Metadata = constructMetadata({
+  title: 'Disclaimer & Batasan Tanggung Jawab',
+  description: `Sanggahan resmi dan batasan tanggung jawab hukum mengenai akurasi materi dan data statistik di ${SITE_NAME}.`,
+  slug: 'disclaimer',
+  ogType: 'website',
+});
+
 export default function DisclaimerPage() {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: `Disclaimer - ${SITE_NAME}`,
+    description: `Sanggahan resmi dan batasan tanggung jawab hukum mengenai akurasi materi dan data statistik di ${SITE_NAME}.`,
+    url: `${BASE_URL}/disclaimer`,
+    breadcrumb: {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        {
+          '@type': 'ListItem',
+          position: 1,
+          name: 'Home',
+          item: BASE_URL,
+        },
+        {
+          '@type': 'ListItem',
+          position: 2,
+          name: 'Disclaimer',
+          item: `${BASE_URL}/disclaimer`,
+        },
+      ],
+    },
+  };
+
   const disclaimerItems = [
+
     {
       icon: IoIosWarning,
       title: 'Akurasi Informasi',
@@ -34,53 +69,60 @@ export default function DisclaimerPage() {
   ];
 
   return (
-    <div className="mx-auto max-w-190 px-4 py-12">
-      {/* Header Section */}
-      <h1 className="text-3xl font-semibold text-text mb-2 font-serif">
-        Disclaimer
-      </h1>
-      <p className="text-text-secondary mb-8">
-        Batasan tanggung jawab dan ketentuan penggunaan informasi pada platform
-        352_IDN.
-      </p>
-
-      {/* Grid Card Disclaimer */}
-      <div className="grid gap-4 sm:grid-cols-1 mb-8">
-        {disclaimerItems.map((item, index) => {
-          const Icon = item.icon;
-          return (
-            <div
-              key={index}
-              className="flex items-start gap-4 rounded-lg border border-border bg-surface p-5 transition-colors hover:border-primary"
-            >
-              <div className="rounded-md bg-primary-soft p-2.5 text-primary shrink-0">
-                <Icon className="h-6 w-6" />
-              </div>
-              <div>
-                <h2 className="text-lg font-semibold text-text mb-1">
-                  {item.title}
-                </h2>
-                <p className="text-sm sm:text-base text-text-secondary leading-relaxed">
-                  {item.description}
-                </p>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
-      {/* Box Catatan Penting */}
-      <div className="rounded-xl border border-border bg-surface p-6 relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-1 h-full bg-primary" />
-        <h2 className="text-base font-semibold text-text mb-2">
-          Pemberitahuan Hak Cipta & Penggunaan
-        </h2>
-        <p className="text-sm text-text-secondary leading-relaxed">
-          Seluruh isi artikel disadur dan dikurasi untuk tujuan informasi umum.
-          Dengan menggunakan platform 352_IDN, Anda menyetujui batasan tanggung
-          jawab yang tertuang pada halaman ini.
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <div className="mx-auto max-w-190 px-4 py-12">
+        {/* Header Section */}
+        <h1 className="text-3xl font-semibold text-text mb-2 font-serif">
+          Disclaimer
+        </h1>
+        <p className="text-text-secondary mb-8">
+          Batasan tanggung jawab dan ketentuan penggunaan informasi pada platform
+          352_IDN.
         </p>
+
+        {/* Grid Card Disclaimer */}
+        <div className="grid gap-4 sm:grid-cols-1 mb-8">
+          {disclaimerItems.map((item, index) => {
+            const Icon = item.icon;
+            return (
+              <div
+                key={index}
+                className="flex items-start gap-4 rounded-lg border border-border bg-surface p-5 transition-colors hover:border-primary"
+              >
+                <div className="rounded-md bg-primary-soft p-2.5 text-primary shrink-0">
+                  <Icon className="h-6 w-6" />
+                </div>
+                <div>
+                  <h2 className="text-lg font-semibold text-text mb-1">
+                    {item.title}
+                  </h2>
+                  <p className="text-sm sm:text-base text-text-secondary leading-relaxed">
+                    {item.description}
+                  </p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Box Catatan Penting */}
+        <div className="rounded-xl border border-border bg-surface p-6 relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-1 h-full bg-primary" />
+          <h2 className="text-base font-semibold text-text mb-2">
+            Pemberitahuan Hak Cipta & Penggunaan
+          </h2>
+          <p className="text-sm text-text-secondary leading-relaxed">
+            Seluruh isi artikel disadur dan dikurasi untuk tujuan informasi umum.
+            Dengan menggunakan platform 352_IDN, Anda menyetujui batasan tanggung
+            jawab yang tertuang pada halaman ini.
+          </p>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
+

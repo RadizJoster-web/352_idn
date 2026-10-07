@@ -1,6 +1,47 @@
+import type { Metadata } from 'next';
+import { constructMetadata, BASE_URL, SITE_NAME } from '@/app/src/lib/seo';
+
+export const metadata: Metadata = constructMetadata({
+  title: 'Kebijakan Privasi',
+  description: `Kebijakan privasi, penggunaan cookie, dan perlindungan data pengguna di portal berita olahraga ${SITE_NAME}.`,
+  slug: 'privacy-policy',
+  ogType: 'website',
+});
+
 export default function PrivacyPage() {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: `Kebijakan Privasi - ${SITE_NAME}`,
+    description: `Kebijakan privasi, penggunaan cookie, dan perlindungan data pengguna di portal berita olahraga ${SITE_NAME}.`,
+    url: `${BASE_URL}/privacy-policy`,
+    breadcrumb: {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        {
+          '@type': 'ListItem',
+          position: 1,
+          name: 'Home',
+          item: BASE_URL,
+        },
+        {
+          '@type': 'ListItem',
+          position: 2,
+          name: 'Privacy Policy',
+          item: `${BASE_URL}/privacy-policy`,
+        },
+      ],
+    },
+  };
+
   return (
-    <div className="mx-auto max-w-[760px] px-4 py-12">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <div className="mx-auto max-w-[760px] px-4 py-12">
+
       <h1 className="text-3xl font-semibold text-text mb-6 font-serif">
         Privacy Policy
       </h1>
@@ -29,5 +70,8 @@ export default function PrivacyPage() {
         </p>
       </div>
     </div>
-  );
+  </>
+);
 }
+
+

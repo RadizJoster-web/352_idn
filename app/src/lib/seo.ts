@@ -2,6 +2,9 @@
 import type { Metadata } from 'next';
 import { SITE_NAME } from './constants';
 
+export { SITE_NAME };
+
+
 export type SEOOptions = {
   title?: string;
   description?: string;
@@ -12,12 +15,20 @@ export type SEOOptions = {
   modifiedAt?: string;
   author?: string;
   section?: string;
+  keywords?: string[];
+  noIndex?: boolean;
 };
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://352.idn';
-const DEFAULT_DESCRIPTION =
-  '352.IDN - Portal berita sepak bola terpercaya. Berita terkini, dan analisis mendalam.';
-const DEFAULT_IMAGE = `${BASE_URL}/default-og.jpg`;
+export const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL
+  ? process.env.NEXT_PUBLIC_SITE_URL.startsWith('http')
+    ? process.env.NEXT_PUBLIC_SITE_URL.replace(/\/$/, '')
+    : `https://${process.env.NEXT_PUBLIC_SITE_URL.replace(/\/$/, '')}`
+  : 'https://352.idn';
+
+export const DEFAULT_DESCRIPTION =
+  '352.IDN - Portal berita sepak bola terpercaya. Berita terkini, kabar Timnas Indonesia, Liga 1, Liga Eropa, dan analisis taktik mendalam.';
+
+export const DEFAULT_OG_IMAGE = `${BASE_URL}/default-og.jpg`;
 
 export function constructMetadata({
   title,
@@ -29,16 +40,23 @@ export function constructMetadata({
   modifiedAt,
   author,
   section,
+  keywords,
+  noIndex = false,
 }: SEOOptions = {}): Metadata {
-  const fullTitle = title ? `${title} | ${SITE_NAME}` : SITE_NAME;
-  const canonicalUrl = slug
-    ? `${BASE_URL}/${slug.replace(/^\//, '')}`
+  const fullTitle = title ? `${title} | ${SITE_NAME}` : `${SITE_NAME} - Portal Berita Sepak Bola Terpercaya`;
+  
+  const cleanSlug = slug ? slug.replace(/^\/+/, '') : '';
+  const canonicalUrl = cleanSlug
+    ? (cleanSlug.startsWith('http') ? cleanSlug : `${BASE_URL}/${cleanSlug}`)
     : BASE_URL;
-  const finalImage = ogImage || DEFAULT_IMAGE;
+
+  const finalImage = ogImage || DEFAULT_OG_IMAGE;
 
   return {
+    metadataBase: new URL(BASE_URL),
     title: fullTitle,
     description,
+    keywords: keywords && keywords.length > 0 ? keywords : undefined,
     alternates: {
       canonical: canonicalUrl,
     },
@@ -47,18 +65,19 @@ export function constructMetadata({
       description,
       url: canonicalUrl,
       siteName: SITE_NAME,
+      locale: 'id_ID',
       type: ogType,
       images: [
         {
           url: finalImage,
           width: 1200,
           height: 630,
-          alt: fullTitle,
+          alt: title || SITE_NAME,
         },
       ],
       ...(ogType === 'article' && {
         publishedTime: publishedAt,
-        modifiedTime: modifiedAt,
+        modifiedTime: modifiedAt || publishedAt,
         authors: author ? [author] : undefined,
         section,
       }),
@@ -68,6 +87,25 @@ export function constructMetadata({
       title: fullTitle,
       description,
       images: [finalImage],
+      site: '@352idn',
+      creator: author ? `@${author.replace(/\s+/g, '')}` : '@352idn',
     },
+    robots: noIndex
+      ? {
+          index: false,
+          follow: false,
+        }
+      : {
+          index: true,
+          follow: true,
+          googleBot: {
+            index: true,
+            follow: true,
+            'max-video-preview': -1,
+            'max-image-preview': 'large',
+            'max-snippet': -1,
+          },
+        },
   };
 }
+

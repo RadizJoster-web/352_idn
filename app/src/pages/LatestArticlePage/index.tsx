@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useEffect } from 'react';
 import { constructMetadata } from '@/app/src/lib/seo';

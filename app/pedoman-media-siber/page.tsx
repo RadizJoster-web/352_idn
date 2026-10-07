@@ -1,3 +1,5 @@
+import type { Metadata } from 'next';
+import { constructMetadata, BASE_URL, SITE_NAME } from '@/app/src/lib/seo';
 import {
   IoIosCheckmark,
   IoIosCheckmarkCircleOutline,
@@ -9,8 +11,41 @@ import {
   IoIosHelpCircle,
 } from 'react-icons/io';
 
+export const metadata: Metadata = constructMetadata({
+  title: 'Pedoman Pemberitaan Media Siber',
+  description: `Pedoman dan standar operasional pemberitaan media siber ${SITE_NAME} sesuai pedoman Dewan Pers.`,
+  slug: 'pedoman-media-siber',
+  ogType: 'website',
+});
+
 export default function CyberGuidelinePage() {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: `Pedoman Pemberitaan Media Siber - ${SITE_NAME}`,
+    description: `Pedoman dan standar operasional pemberitaan media siber ${SITE_NAME} sesuai pedoman Dewan Pers.`,
+    url: `${BASE_URL}/pedoman-media-siber`,
+    breadcrumb: {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        {
+          '@type': 'ListItem',
+          position: 1,
+          name: 'Home',
+          item: BASE_URL,
+        },
+        {
+          '@type': 'ListItem',
+          position: 2,
+          name: 'Pedoman Media Siber',
+          item: `${BASE_URL}/pedoman-media-siber`,
+        },
+      ],
+    },
+  };
+
   const guidelines = [
+
     {
       icon: IoIosCheckmark,
       title: '1. Ruang Lingkup & Prinsip Utamanya',
@@ -56,59 +91,66 @@ export default function CyberGuidelinePage() {
   ];
 
   return (
-    <div className="mx-auto max-w-[760px] px-4 py-12">
-      {/* Header Section */}
-      <h1 className="text-3xl font-semibold text-text mb-2 font-serif">
-        Pedoman Media Siber
-      </h1>
-      <p className="text-text-secondary mb-8">
-        Standar etika, ketentuan pemberitaan, dan transparansi publikasi konten
-        pada platform 352_IDN.
-      </p>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <div className="mx-auto max-w-[760px] px-4 py-12">
+        {/* Header Section */}
+        <h1 className="text-3xl font-semibold text-text mb-2 font-serif">
+          Pedoman Media Siber
+        </h1>
+        <p className="text-text-secondary mb-8">
+          Standar etika, ketentuan pemberitaan, dan transparansi publikasi konten
+          pada platform 352_IDN.
+        </p>
 
-      {/* List Card Pedoman */}
-      <div className="grid gap-4 sm:grid-cols-1 mb-8">
-        {guidelines.map((item, index) => {
-          const Icon = item.icon;
-          return (
-            <div
-              key={index}
-              className="flex items-start gap-4 rounded-lg border border-border bg-surface p-5 transition-colors hover:border-primary"
-            >
-              <div className="rounded-md bg-primary-soft p-2.5 text-primary shrink-0">
-                <Icon className="h-6 w-6" />
+        {/* List Card Pedoman */}
+        <div className="grid gap-4 sm:grid-cols-1 mb-8">
+          {guidelines.map((item, index) => {
+            const Icon = item.icon;
+            return (
+              <div
+                key={index}
+                className="flex items-start gap-4 rounded-lg border border-border bg-surface p-5 transition-colors hover:border-primary"
+              >
+                <div className="rounded-md bg-primary-soft p-2.5 text-primary shrink-0">
+                  <Icon className="h-6 w-6" />
+                </div>
+                <div>
+                  <h2 className="text-lg font-semibold text-text mb-1">
+                    {item.title}
+                  </h2>
+                  <p className="text-sm sm:text-base text-text-secondary leading-relaxed">
+                    {item.description}
+                  </p>
+                </div>
               </div>
-              <div>
-                <h2 className="text-lg font-semibold text-text mb-1">
-                  {item.title}
-                </h2>
-                <p className="text-sm sm:text-base text-text-secondary leading-relaxed">
-                  {item.description}
-                </p>
-              </div>
+            );
+          })}
+        </div>
+
+        {/* Box Penyesuaian & Penyelesaian Sengketa */}
+        <div className="rounded-xl border border-border bg-surface p-6 relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-1 h-full bg-primary" />
+          <div className="flex items-start gap-3">
+            <IoIosHelpCircle className="h-6 w-6 text-primary shrink-0 mt-0.5" />
+            <div>
+              <h2 className="text-base font-semibold text-text mb-1">
+                Penyelesaian Sengketa
+              </h2>
+              <p className="text-sm text-text-secondary leading-relaxed">
+                Pedoman ini disusun berpatokan pada Pedoman Pemberitaan Media
+                Siber yang ditetapkan oleh Dewan Pers. Penilaian akhir atas
+                sengketa mengenai pelaksanaan pedoman ini diselesaikan melalui
+                mekanimse Dewan Pers.
+              </p>
             </div>
-          );
-        })}
-      </div>
-
-      {/* Box Penyesuaian & Penyelesaian Sengketa */}
-      <div className="rounded-xl border border-border bg-surface p-6 relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-1 h-full bg-primary" />
-        <div className="flex items-start gap-3">
-          <IoIosHelpCircle className="h-6 w-6 text-primary shrink-0 mt-0.5" />
-          <div>
-            <h2 className="text-base font-semibold text-text mb-1">
-              Penyelesaian Sengketa
-            </h2>
-            <p className="text-sm text-text-secondary leading-relaxed">
-              Pedoman ini disusun berpatokan pada Pedoman Pemberitaan Media
-              Siber yang ditetapkan oleh Dewan Pers. Penilaian akhir atas
-              sengketa mengenai pelaksanaan pedoman ini diselesaikan melalui
-              mekanimse Dewan Pers.
-            </p>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
+

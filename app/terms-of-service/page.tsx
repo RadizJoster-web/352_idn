@@ -1,6 +1,47 @@
+import type { Metadata } from 'next';
+import { constructMetadata, BASE_URL, SITE_NAME } from '@/app/src/lib/seo';
+
+export const metadata: Metadata = constructMetadata({
+  title: 'Syarat & Ketentuan Layanan',
+  description: `Syarat dan ketentuan penggunaan platform media berita sepak bola ${SITE_NAME}.`,
+  slug: 'terms-of-service',
+  ogType: 'website',
+});
+
 export default function TermsPage() {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: `Syarat & Ketentuan Layanan - ${SITE_NAME}`,
+    description: `Syarat dan ketentuan penggunaan platform media berita sepak bola ${SITE_NAME}.`,
+    url: `${BASE_URL}/terms-of-service`,
+    breadcrumb: {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        {
+          '@type': 'ListItem',
+          position: 1,
+          name: 'Home',
+          item: BASE_URL,
+        },
+        {
+          '@type': 'ListItem',
+          position: 2,
+          name: 'Terms of Service',
+          item: `${BASE_URL}/terms-of-service`,
+        },
+      ],
+    },
+  };
+
   return (
-    <div className="mx-auto max-w-[760px] px-4 py-12">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <div className="mx-auto max-w-[760px] px-4 py-12">
+
       <h1 className="text-3xl font-semibold text-text mb-6 font-serif">
         Terms of Service
       </h1>
@@ -32,5 +73,7 @@ export default function TermsPage() {
         </p>
       </div>
     </div>
-  );
+  </>
+);
 }
+

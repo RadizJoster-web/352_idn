@@ -1,3 +1,5 @@
+import type { Metadata } from 'next';
+import { constructMetadata, BASE_URL, SITE_NAME } from '@/app/src/lib/seo';
 import {
   IoIosCheckmarkCircleOutline,
   IoIosRefresh,
@@ -5,8 +7,41 @@ import {
   IoIosPaperPlane,
 } from 'react-icons/io';
 
+export const metadata: Metadata = constructMetadata({
+  title: 'Susunan Redaksi & Pedoman Editorial',
+  description: `Struktur dewan redaksi, standar jurnalisme olahraga, dan prinsip integritas liputan berita ${SITE_NAME}.`,
+  slug: 'redaksi',
+  ogType: 'website',
+});
+
 export default function EditorialPage() {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'AboutPage',
+    name: `Pedoman & Susunan Redaksi ${SITE_NAME}`,
+    description: `Struktur dewan redaksi, standar jurnalisme olahraga, dan prinsip integritas liputan berita ${SITE_NAME}.`,
+    url: `${BASE_URL}/redaksi`,
+    breadcrumb: {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        {
+          '@type': 'ListItem',
+          position: 1,
+          name: 'Home',
+          item: BASE_URL,
+        },
+        {
+          '@type': 'ListItem',
+          position: 2,
+          name: 'Redaksi',
+          item: `${BASE_URL}/redaksi`,
+        },
+      ],
+    },
+  };
+
   const editorialPoints = [
+
     {
       icon: IoIosCheckmarkCircleOutline,
       title: 'Prinsip Editorial',
@@ -28,7 +63,13 @@ export default function EditorialPage() {
   ];
 
   return (
-    <div className="mx-auto max-w-[760px] px-4 py-12">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <div className="mx-auto max-w-[760px] px-4 py-12">
+
       {/* Header Section */}
       <h1 className="text-3xl font-semibold text-text mb-2 font-serif">
         Pedoman Redaksi
@@ -88,5 +129,8 @@ export default function EditorialPage() {
         </a>
       </div>
     </div>
-  );
+  </>
+);
 }
+
+

@@ -62,19 +62,37 @@ export default async function ArticleDetailPage({ params }: Props) {
 
   const mainImageAlt =
     (article.mainImage as { alt?: string } | undefined)?.alt || article.title;
-
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://352.idn';
+
+  const siteUrl = baseUrl.startsWith('http')
+    ? baseUrl.replace(/\/$/, '')
+    : `https://${baseUrl.replace(/\/$/, '')}`;
+
+  const articleImageUrl = article.seoImage
+    ? urlFor(article.seoImage).width(1200).height(630).fit('crop').url()
+    : article.mainImage
+    ? urlFor(article.mainImage).width(1200).height(630).fit('crop').url()
+    : `${siteUrl}/default-og.jpg`;
 
   return (
     <>
       {/* Schema JSON-LD untuk Google Bot */}
       <NewsArticleSchema
         headline={article.title}
-        image={[urlFor(article.mainImage).width(1200).url()]}
+        description={article.seoDescription || article.excerpt}
+        image={[articleImageUrl]}
         datePublished={article.publishedAt}
-        author={{ name: article.author.name }}
-        url={`${baseUrl}/artikel/${article.slug}`}
+        dateModified={article.publishedAt}
+        author={{
+          name: article.author.name,
+          url: article.author.slug
+            ? `${siteUrl}/penulis/${article.author.slug}`
+            : undefined,
+        }}
+        section={article.category?.title}
+        url={`${siteUrl}/artikel/${article.slug}`}
       />
+
 
       <article className="mx-auto max-w-[var(--container-max)] px-4 py-8">
         <div className="grid gap-10 lg:grid-cols-[1fr_300px]">

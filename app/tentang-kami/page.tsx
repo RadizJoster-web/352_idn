@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { constructMetadata } from '@/app/src/lib/seo';
+import { constructMetadata, BASE_URL, SITE_NAME } from '@/app/src/lib/seo';
 import {
   TbTrophy,
   TbFlame,
@@ -12,8 +12,9 @@ import { FaRegNewspaper } from 'react-icons/fa6';
 export const metadata: Metadata = constructMetadata({
   title: 'Tentang Kami',
   description:
-    'Profil, fokus editorial, dan topik liputan portal berita sepak bola 352_IDN.',
-  slug: 'tentang',
+    'Profil redaksi, fokus editorial, dan topik liputan portal berita sepak bola 352.IDN.',
+  slug: 'tentang-kami',
+  ogType: 'website',
 });
 
 const COVERAGE_TOPICS = [
@@ -50,8 +51,45 @@ const COVERAGE_TOPICS = [
 ];
 
 export default function AboutPage() {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'AboutPage',
+    name: `Tentang ${SITE_NAME}`,
+    description:
+      'Profil redaksi, fokus editorial, dan topik liputan portal berita sepak bola 352.IDN.',
+    url: `${BASE_URL}/tentang-kami`,
+    mainEntity: {
+      '@type': 'NewsMediaOrganization',
+      name: SITE_NAME,
+      url: BASE_URL,
+    },
+    breadcrumb: {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        {
+          '@type': 'ListItem',
+          position: 1,
+          name: 'Home',
+          item: BASE_URL,
+        },
+        {
+          '@type': 'ListItem',
+          position: 2,
+          name: 'Tentang Kami',
+          item: `${BASE_URL}/tentang-kami`,
+        },
+      ],
+    },
+  };
+
   return (
-    <div className="mx-auto max-w-[var(--container-max)] px-4 py-12 lg:py-16">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <div className="mx-auto max-w-[var(--container-max)] px-4 py-12 lg:py-16">
+
       {/* 1. HERO SECTION */}
       <section className="mb-14 text-center max-w-3xl mx-auto">
         <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-surface-2 text-text-secondary mb-4 border border-border">
@@ -122,5 +160,7 @@ export default function AboutPage() {
         </div>
       </section>
     </div>
-  );
+  </>
+);
 }
+

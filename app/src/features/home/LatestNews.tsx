@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import Link  from 'next/link';
 import ArticleListItemComponent from '../../components/article/ArticleListItem';
 import { useInfiniteArticles } from '../../hooks/useInfiniteArticles';
 import { AdUnit } from '../../components/AdsUnit';
@@ -15,7 +15,7 @@ export default function LatestNews() {
           Update Terbaru
         </h2>
         <Link
-          to="/artikel-terbaru"
+          href="/artikel-terbaru"
           className="text-sm font-semibold text-primary hover:text-primary-hover"
         >
           Lihat Semua &rarr;

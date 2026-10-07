@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import type { ArticleListItem } from '../../types/article';
 import SanityImage from '../../components/media/SanityImage';
 import TimeAgo from '../../components/common/TimeAgo';
@@ -11,7 +11,7 @@ type HeroHeadlineProps = {
 export default function HeroHeadline({ article }: HeroHeadlineProps) {
   return (
     <Link
-      to={`/artikel/${article.slug}`}
+      href={`/artikel/${article.slug}`}
       className="group bg-dark text-white flex flex-col"
     >
       {/* 1. Container Gambar dengan aspect ratio yang konsisten di mobile & desktop (contoh: 16/9) */}
