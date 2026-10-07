@@ -1,0 +1,57 @@
+import Link from 'next/link';
+import ArticleListItemComponent from '../../components/article/ArticleListItem';
+import { useInfiniteArticles } from '../../hooks/useInfiniteArticles';
+import { AdUnit } from '../../components/AdsUnit';
+
+export default function LatestNews() {
+  const { articles, loading, lastElementRef } = useInfiniteArticles(10);
+
+  if (articles.length === 0 && !loading) return null;
+
+  return (
+    <section>
+      <div className="flex items-center justify-between mb-4 border-b border-border pb-2">
+        <h2 className="text-xl font-semibold text-text lg:text-xl">
+          Update Terbaru
+        </h2>
+        <Link
+          href="/artikel-terbaru"
+          className="text-sm font-semibold text-primary hover:text-primary-hover"
+        >
+          Lihat Semua &rarr;
+        </Link>
+      </div>
+
+      <div className="divide-y divide-border">
+        {articles.map((article, index) => {
+          const isAdPosition = index === 4;
+          const isSecondToLast = index === articles.length - 2;
+
+          return (
+            <div key={article._id}>
+              {/* Ads Display List — di index ke-4 */}
+              {isAdPosition && (
+                <div className="py-4">
+                  <AdUnit
+                    adSlot="6840264105"
+                    adFormat="fluid"
+                    adLayoutKey="-ez+5q+5e-d4+4m"
+                  />
+                </div>
+              )}
+              <div ref={isSecondToLast ? lastElementRef : null}>
+                <ArticleListItemComponent article={article} />
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {loading && (
+        <div className="py-4 text-center text-sm text-text-muted">
+          Memuat berita...
+        </div>
+      )}
+    </section>
+  );
+}

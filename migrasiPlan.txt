@@ -1,0 +1,73 @@
+Migrasi portal berita sepak bola ke Next.js menggunakan App Router adalah langkah yang sangat tepat untuk menyelesaikan masalah SEO, mengingat Next.js unggul dalam Server-Side Rendering (SSR) dan Static Site Generation (SSG). Dokumen Arsitektur.md yang ada sudah merinci pemisahan yang sangat terstruktur antara *Presentation*, *Feature*, dan *Data Access*.
+
+Sesuai dengan aturan final arsitektur, proses migrasi tidak boleh dimulai dari pembuatan komponen UI. Berikut adalah urutan eksekusi pemindahan fitur dari yang paling mudah dan mendasar hingga yang paling kompleks dan rawan bug.
+
+### Tahap 1: Fondasi Arsitektur & Koneksi (Paling Mudah & Wajib Pertama)
+
+Tahap ini berfokus pada infrastruktur data sebelum ada UI yang dirender.
+
+* **Tipe Data (Types):** Pindahkan semua definisi TypeScript untuk `article.ts`, `category.ts`, `author.ts`, `match.ts`, dan `site.ts` ke direktori baru.
+
+
+* **Sanity Client & Service Layer:** Setup konfigurasi koneksi Sanity (`client.ts`, `image.ts`, `fetcher.ts`). Pastikan variabel environment seperti `VITE_SANITY_PROJECT_ID` diubah menjadi `NEXT_PUBLIC_SANITY_PROJECT_ID` agar sesuai dengan aturan environment Next.js.
+
+
+* **Query Layer:** Pindahkan semua arsitektur GROQ query (`articleQueries.ts`, `categoryQueries.ts`, dll) tanpa mengubah logikanya.
+
+
+
+### Tahap 2: Global Layout & Halaman Statis (Risiko Rendah)
+
+Setelah fondasi data siap, bangun struktur *shell* yang akan membungkus seluruh aplikasi.
+
+* **App Shell:** Buat struktur layout global yang berisi Top Bar, Header, Main Navigation, dan Footer. Dalam Next.js App Router, ini akan ditempatkan di dalam file `app/layout.tsx`.
+
+
+* **Halaman Statis:** Migrasikan halaman yang datanya statis atau dikelola dari *Sanity Site Settings* (Singleton), seperti `/tentang`, `/redaksi`, `/kontak`, `/privacy-policy`, `/terms-of-service`, dan `/disclaimer`.
+
+
+
+### Tahap 3: Halaman Kategori & Detail Artikel (Risiko Menengah, Fokus SEO)
+
+Ini adalah inti dari portal berita, di mana implementasi SEO akan sangat krusial.
+
+* **Dynamic Routing:** Buat route dinamis untuk kategori (`/category/[slug]`) dan detail artikel (`/artikel/[slug]`).
+
+
+* **Rendering Konten:** Pindahkan renderer untuk Portable Text Sanity agar *article body* tidak dirender sebagai raw HTML.
+
+
+* **Metadata SEO & JSON-LD:** Gunakan fitur `generateMetadata` Next.js untuk menyuntikkan *seoTitle*, *seoDescription*, *seoImage*, atau fallback (menggunakan *title*, *excerpt*, *mainImage*) ke setiap route. Terapkan juga skema JSON-LD `NewsArticle` yang mengambil nilai langsung dari CMS.
+
+
+
+### Tahap 4: Halaman Utama / Homepage (Risiko Menengah-Tinggi)
+
+Halaman ini rawan *bottleneck* karena memuat banyak data sekaligus.
+
+* **Pemecahan Query:** Ikuti strategi pemecahan query menjadi beberapa bagian kecil (Query A untuk Hero, Query B untuk Top Stories, Query C untuk Timnas, dst) alih-alih membuat satu query raksasa.
+
+
+* **Server Components:** Eksekusi pengambilan data ini di komponen sisi server Next.js, lalu turunkan prop ke komponen *feature parents* seperti `HeroHeadline`, `MainNews`, dan `TimnasSection`.
+
+
+
+### Tahap 5: Fitur Interaktif & API Eksternal (Paling Rawan Bug)
+
+Fitur-fitur ini melibatkan *state* klien yang dinamis dan komunikasi dengan API pihak ketiga.
+
+* **Search (`/search?q=`):** Migrasikan fungsionalitas pencarian. Ini memerlukan penanganan *URL search params*, input dengan implementasi *debounce*, serta sinkronisasi state pencarian di sisi klien (Client Components).
+
+
+* **Match Schedule (`/jadwal`):** Data pertandingan dari eksternal *Football API* tidak boleh terekspos ke klien. Buat Route Handlers di Next.js (misalnya `/api/matches`) yang bertindak sebagai *server-side proxy* untuk menyembunyikan `FOOTBALL_API_KEY`, menangani *rate limit*, dan menormalisasi *response* data. Ini adalah bagian yang paling rawan bug karena melibatkan caching eksternal dan perubahan status pertandingan.
+
+
+
+### Tahap 6: Error Handling & Loading States (Penyempurnaan Akhir)
+
+Langkah terakhir memastikan pengalaman pengguna tetap terjaga saat terjadi kegagalan jaringan atau proses *fetching*.
+
+* **Loading Skeleton:** Buat file `loading.tsx` untuk fitur-fitur utama menggunakan skeleton penahan *layout* agar tidak terjadi *layout shift* yang besar.
+
+
+* **Error Boundaries:** Buat file `error.tsx` per *feature* atau direktori. Jika satu *section* gagal (misal: widget klasemen), isolasi error tersebut agar tidak membuat seluruh *homepage* menjadi *blank*. Namun, jika artikel utama gagal dimuat di halaman detail, pastikan diarahkan ke halaman error secara penuh.
