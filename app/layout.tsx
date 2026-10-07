@@ -44,10 +44,10 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: DEFAULT_OG_IMAGE,
+        url: DEFAULT_OG_IMAGE, // Sekarang berisi: https://352.idn/logo.png
         width: 1200,
         height: 630,
-        alt: `${SITE_NAME} - Portal Berita Sepak Bola`,
+        alt: `${SITE_NAME} Portal Berita Sepak Bola`,
       },
     ],
   },
@@ -140,4 +140,3 @@ export default function RootLayout({
     </html>
   );
 }
-

@@ -27,6 +27,7 @@ export const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL
 export const DEFAULT_DESCRIPTION =
   '352.IDN - Portal berita sepak bola terpercaya. Berita terkini, kabar Timnas Indonesia, Liga 1, Liga Eropa, dan analisis taktik mendalam.';
 
+// 1. PASTIKAN DEFAULT_OG_IMAGE MENGGUNAKAN ABSOLUTE URL
 export const DEFAULT_OG_IMAGE = `${BASE_URL}/logo.png`;
 
 export function constructMetadata({
@@ -53,7 +54,11 @@ export function constructMetadata({
       : `${BASE_URL}/${cleanSlug}`
     : BASE_URL;
 
-  const finalImage = ogImage || DEFAULT_OG_IMAGE;
+  // 2. LOGIKA FALLBACK UNTUK SELALU MEMASTIKAN ABSOLUTE URL
+  let finalImage = ogImage || DEFAULT_OG_IMAGE;
+  if (finalImage.startsWith('/')) {
+    finalImage = `${BASE_URL}${finalImage}`;
+  }
 
   return {
     metadataBase: new URL(BASE_URL),
@@ -72,7 +77,7 @@ export function constructMetadata({
       type: ogType,
       images: [
         {
-          url: finalImage,
+          url: finalImage, // Selalu berupa https://domain.com/...
           width: 1200,
           height: 630,
           alt: title || SITE_NAME,
