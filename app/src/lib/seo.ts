@@ -30,6 +30,8 @@ export const DEFAULT_DESCRIPTION =
 // 1. PASTIKAN DEFAULT_OG_IMAGE MENGGUNAKAN ABSOLUTE URL
 export const DEFAULT_OG_IMAGE = `${BASE_URL}/icon.png`;
 
+export const DEFAULT_TITLE = `Portal Berita Sepak Bola Terkini & Gosip Terupdate | ${SITE_NAME}`;
+
 export function constructMetadata({
   title,
   description = DEFAULT_DESCRIPTION,

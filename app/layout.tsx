@@ -9,17 +9,17 @@ import {
   SITE_NAME,
   DEFAULT_DESCRIPTION,
   DEFAULT_OG_IMAGE,
+  DEFAULT_TITLE,
 } from '@/app/src/lib/seo';
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
-    default: `Portal Berita Sepak Bola Terkini & Gosip Terupdate | ${SITE_NAME}`,
+    default: DEFAULT_TITLE,
     template: `%s | ${SITE_NAME}`,
   },
   description: DEFAULT_DESCRIPTION,
   applicationName: SITE_NAME,
-  siteName: SITE_NAME,
   authors: [{ name: SITE_NAME }],
   generator: 'Next.js',
   keywords: [
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     apple: '/icon.png',
   },
   openGraph: {
-    title: `${SITE_NAME} - Portal Berita Sepak Bola Terupdate`,
+    title: DEFAULT_TITLE,
     description: DEFAULT_DESCRIPTION,
     url: BASE_URL,
     siteName: SITE_NAME,
@@ -59,7 +59,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: `${SITE_NAME} - Portal Berita Sepak Bola Terupdate`,
+    title: DEFAULT_TITLE,
     description: DEFAULT_DESCRIPTION,
     images: [DEFAULT_OG_IMAGE],
     site: '@352idn',
