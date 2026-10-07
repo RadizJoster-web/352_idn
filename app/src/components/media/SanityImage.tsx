@@ -1,4 +1,5 @@
 import type { SanityImageSource } from '@sanity/image-url';
+import Image from 'next/image';
 import {
   urlFor,
   IMAGE_WIDTHS,
@@ -26,10 +27,11 @@ export default function SanityImage({
   const url = urlFor(source).width(w).auto('format').fit('crop').url();
 
   return (
-    <img
+    <Image
       src={url}
       alt={alt}
       width={w}
+      height={Math.round((w * 9) / 16)} // Asumsi rasio aspek 16:9
       loading={priority ? 'eager' : 'lazy'}
       decoding={priority ? 'sync' : 'async'}
       className={`object-cover ${className}`}

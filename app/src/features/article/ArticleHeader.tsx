@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 import type { ArticleDetail } from '../../types/article';
 import Breadcrumb from '../../components/common/Breadcrumb';
@@ -41,7 +42,7 @@ export default function ArticleHeader({ article }: ArticleHeaderProps) {
         {/* Author & Date Section (Left) */}
         <div className="flex items-center gap-3">
           {article.author.avatar ? (
-            <img
+            <Image
               src={urlFor(article.author.avatar).width(80).height(80).url()}
               alt={article.author.name}
               className="w-10 h-10 rounded-full object-cover bg-surface"

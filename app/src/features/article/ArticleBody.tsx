@@ -1,5 +1,6 @@
 import { PortableText } from '@portabletext/react';
 import { urlFor } from '@/app/src/service/sanity/image';
+import Image from "next/image"
 
 type ArticleBodyProps = {
   content: unknown[];
@@ -39,9 +40,11 @@ export default function ArticleBody({ content }: ArticleBodyProps) {
 
               return (
                 <figure className="flex flex-col items-center">
-                  <img
+                  <Image
                     src={urlFor(value).url()}
                     alt={value.alt || 'Gambar artikel'}
+                    width={800}
+                    height={450}
                     className="w-full h-auto rounded-t-lg"
                     loading="lazy"
                   />
