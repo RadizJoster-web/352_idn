@@ -22,13 +22,13 @@ export const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL
   ? process.env.NEXT_PUBLIC_SITE_URL.startsWith('http')
     ? process.env.NEXT_PUBLIC_SITE_URL.replace(/\/$/, '')
     : `https://${process.env.NEXT_PUBLIC_SITE_URL.replace(/\/$/, '')}`
-  : 'https://352.idn';
+  : 'https://352_IDN';
 
 export const DEFAULT_DESCRIPTION =
-  '352.IDN - Portal berita sepak bola terpercaya. Berita terkini, kabar Timnas Indonesia, Liga 1, Liga Eropa, dan analisis taktik mendalam.';
+  'Baca berita sepak bola terbaru hari ini di 352_IDN. Sajian berita Timnas Indonesia, Liga 1, Premier League, Liga Champions, hingga ulasan taktik mendalam.';
 
 // 1. PASTIKAN DEFAULT_OG_IMAGE MENGGUNAKAN ABSOLUTE URL
-export const DEFAULT_OG_IMAGE = `${BASE_URL}/logo.png`;
+export const DEFAULT_OG_IMAGE = `${BASE_URL}/icon.png`;
 
 export function constructMetadata({
   title,

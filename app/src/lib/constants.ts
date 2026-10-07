@@ -1,6 +1,6 @@
-export const SITE_NAME = '352.IDN'
+export const SITE_NAME = '352_IDN';
 
-export const PAGE_SIZE = 10
+export const PAGE_SIZE = 10;
 
 export const FOOTER_LINKS = {
   company: [
@@ -13,4 +13,4 @@ export const FOOTER_LINKS = {
     { label: 'Terms of Service', href: '/terms-of-service' },
     { label: 'Disclaimer', href: '/disclaimer' },
   ],
-}
+};

@@ -14,11 +14,12 @@ import {
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
-    default: `${SITE_NAME} - Portal Berita Sepak Bola Terupdate`,
+    default: `Portal Berita Sepak Bola Terkini & Gosip Terupdate | ${SITE_NAME}`,
     template: `%s | ${SITE_NAME}`,
   },
   description: DEFAULT_DESCRIPTION,
   applicationName: SITE_NAME,
+  siteName: SITE_NAME,
   authors: [{ name: SITE_NAME }],
   generator: 'Next.js',
   keywords: [
@@ -35,6 +36,11 @@ export const metadata: Metadata = {
   alternates: {
     canonical: BASE_URL,
   },
+  icons: {
+    icon: '/icon.png',
+    shortcut: '/icon.png',
+    apple: '/icon.png',
+  },
   openGraph: {
     title: `${SITE_NAME} - Portal Berita Sepak Bola Terupdate`,
     description: DEFAULT_DESCRIPTION,
@@ -44,7 +50,7 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: DEFAULT_OG_IMAGE, // Sekarang berisi: https://352.idn/logo.png
+        url: DEFAULT_OG_IMAGE, // Sekarang berisi: https://352_IDN/icon.png
         width: 1200,
         height: 630,
         alt: `${SITE_NAME} Portal Berita Sepak Bola`,
@@ -82,7 +88,7 @@ const jsonLd = {
       logo: {
         '@type': 'ImageObject',
         '@id': `${BASE_URL}/#logo`,
-        url: `${BASE_URL}/logo.png`,
+        url: `${BASE_URL}/icon.png`,
         caption: SITE_NAME,
       },
       sameAs: [
@@ -96,6 +102,7 @@ const jsonLd = {
       '@id': `${BASE_URL}/#website`,
       url: BASE_URL,
       name: SITE_NAME,
+      alternateName: ['352_IDN', '352 IDN', '352IDN', '352idn', '352.idn'],
       description: DEFAULT_DESCRIPTION,
       publisher: {
         '@id': `${BASE_URL}/#organization`,
