@@ -14,7 +14,7 @@ import {
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
-    default: `${SITE_NAME} - Portal Berita Sepak Bola Terpercaya`,
+    default: `${SITE_NAME} - Portal Berita Sepak Bola Terupdate`,
     template: `%s | ${SITE_NAME}`,
   },
   description: DEFAULT_DESCRIPTION,
@@ -30,13 +30,13 @@ export const metadata: Metadata = {
     'liga champions',
     'skor bola',
     'hasil pertandingan',
-    '352.IDN',
+    '352_IDN',
   ],
   alternates: {
     canonical: BASE_URL,
   },
   openGraph: {
-    title: `${SITE_NAME} - Portal Berita Sepak Bola Terpercaya`,
+    title: `${SITE_NAME} - Portal Berita Sepak Bola Terupdate`,
     description: DEFAULT_DESCRIPTION,
     url: BASE_URL,
     siteName: SITE_NAME,
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: `${SITE_NAME} - Portal Berita Sepak Bola Terpercaya`,
+    title: `${SITE_NAME} - Portal Berita Sepak Bola Terupdate`,
     description: DEFAULT_DESCRIPTION,
     images: [DEFAULT_OG_IMAGE],
     site: '@352idn',

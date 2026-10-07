@@ -4,7 +4,6 @@ import { SITE_NAME } from './constants';
 
 export { SITE_NAME };
 
-
 export type SEOOptions = {
   title?: string;
   description?: string;
@@ -28,7 +27,7 @@ export const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL
 export const DEFAULT_DESCRIPTION =
   '352.IDN - Portal berita sepak bola terpercaya. Berita terkini, kabar Timnas Indonesia, Liga 1, Liga Eropa, dan analisis taktik mendalam.';
 
-export const DEFAULT_OG_IMAGE = `${BASE_URL}/default-og.jpg`;
+export const DEFAULT_OG_IMAGE = `/logo.png`;
 
 export function constructMetadata({
   title,
@@ -43,11 +42,15 @@ export function constructMetadata({
   keywords,
   noIndex = false,
 }: SEOOptions = {}): Metadata {
-  const fullTitle = title ? `${title} | ${SITE_NAME}` : `${SITE_NAME} - Portal Berita Sepak Bola Terpercaya`;
-  
+  const fullTitle = title
+    ? `${title} | ${SITE_NAME}`
+    : `${SITE_NAME} - Portal Berita Sepak Bola Terupdate`;
+
   const cleanSlug = slug ? slug.replace(/^\/+/, '') : '';
   const canonicalUrl = cleanSlug
-    ? (cleanSlug.startsWith('http') ? cleanSlug : `${BASE_URL}/${cleanSlug}`)
+    ? cleanSlug.startsWith('http')
+      ? cleanSlug
+      : `${BASE_URL}/${cleanSlug}`
     : BASE_URL;
 
   const finalImage = ogImage || DEFAULT_OG_IMAGE;
@@ -108,4 +111,3 @@ export function constructMetadata({
         },
   };
 }
-
