@@ -105,30 +105,6 @@ export default defineType({
         'Menandai artikel ini sebagai berita hangat pendukung headline (4 artikel dibawah headline)',
       initialValue: false,
     }),
-    // SEO Fields
-    defineField({
-      name: 'seoTitle',
-      title: 'SEO Title',
-      type: 'string',
-      group: 'seo',
-    }),
-    defineField({
-      name: 'seoDescription',
-      title: 'SEO Description',
-      type: 'text',
-      group: 'seo',
-    }),
-    defineField({
-      name: 'seoImage',
-      title: 'SEO Image',
-      type: 'image',
-      group: 'seo',
-    }),
   ],
-  groups: [
-    {
-      name: 'seo',
-      title: 'SEO',
-    },
-  ],
+
 })
